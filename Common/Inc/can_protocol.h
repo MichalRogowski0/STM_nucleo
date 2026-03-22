@@ -7,6 +7,5 @@
 
 #define CAN_IDX_DELAY_MS        0
 #define CAN_IDX_REPEAT_COUNT    1
-#define CAN_IDX_LIGHT_LEVEL     2
 
 #define CAN_IDX_LIGHT_LEVEL     0
