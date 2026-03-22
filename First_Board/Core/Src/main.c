@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "can_protocol.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -128,10 +128,10 @@ int main(void)
   }
   HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING);
  
-  TxHeader.DLC = 1;
+  TxHeader.DLC = CAN_DLC_CONTROL;
   TxHeader.IDE = CAN_ID_STD;
   TxHeader.RTR = CAN_RTR_DATA;
-  TxHeader.StdId = 0x446;
+  TxHeader.StdId = CAN_ID_MASTER_TO_SLAVE;
 
   /* USER CODE END 2 */
 
@@ -145,7 +145,7 @@ int main(void)
     }
     HAL_ADC_Stop(&hadc1);
 
-    TxData[0] = (adc_value * 255) / 4095;
+    TxData[CAN_IDX_LIGHT_LEVEL] = (adc_value * 255) / 4095;
 
     if(HAL_CAN_AddTxMessage(&hcan1, &TxHeader, TxData, &TxMailbox) != HAL_OK){
       error_count++;

@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "can_protocol.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -122,10 +122,10 @@ int main(void)
   }
   HAL_CAN_ActivateNotification(&hcan2, CAN_IT_RX_FIFO1_MSG_PENDING);
  
-  TxHeader.DLC = 1;
+  TxHeader.DLC = CAN_DLC_CONTROL;
   TxHeader.IDE = CAN_ID_STD;
   TxHeader.RTR = CAN_RTR_DATA;
-  TxHeader.StdId = 0x103;
+  TxHeader.StdId = CAN_ID_SLAVE_TO_MASTER;
 
   /* USER CODE END 2 */
 
@@ -137,7 +137,7 @@ int main(void)
       error_count++;
     }
 
-    uint8_t brightness = RxData[0];
+    uint8_t brightness = RxData[CAN_IDX_LIGHT_LEVEL];
     if (brightness < 100) {
       HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
     }
