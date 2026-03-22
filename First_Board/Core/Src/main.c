@@ -21,7 +21,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <string.h>
+
 #include "can_protocol.h"
+#include "logger.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -118,6 +121,7 @@ int main(void)
   MX_CAN1_Init();
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
+  logger_init(&huart2);
   HAL_GPIO_WritePin(LD2_GPIO_Port,LD2_Pin,GPIO_PIN_RESET);
 
   HAL_CAN_Stop(&hcan1);
@@ -150,6 +154,11 @@ int main(void)
     if(HAL_CAN_AddTxMessage(&hcan1, &TxHeader, TxData, &TxMailbox) != HAL_OK){
       error_count++;
     }
+
+    logger_log(LOG_TYPE_INFO, "ADC = %lu LIGHT = %u\r\n",
+                 (unsigned long)adc_value,
+                 (unsigned int)TxData[CAN_IDX_LIGHT_LEVEL]);
+
 
     HAL_Delay(50);
     /* USER CODE END WHILE */
