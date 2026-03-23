@@ -1,1 +1,6 @@
 Unfinished project
+
+The goal is to develop a bidirectional communication node system where one board acts as the Master
+(e.g., a parameter controller or user interface) and the second board serves as the Slave 
+(e.g., an executive controller with integrated sensors).
+The system is designed with a can bus topology, allowing for seamless expansion with additional modules.
